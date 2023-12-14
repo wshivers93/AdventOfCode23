@@ -3,6 +3,7 @@ use std::fs::read_to_string;
 use std::str;
 
 // answer: 2207
+// answer pt2: 62241
 
 #[derive(PartialEq, Debug)]
 struct Cubes {
