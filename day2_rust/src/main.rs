@@ -35,16 +35,16 @@ impl Cubes {
     }
 
     pub fn get_color(&self, color: &str) -> i32 {
-      match color {
-        "red" => self.red,
-        "blue" => self.blue,
-        "green" => self.green,
-        _ => panic!("Invalid property value {}", color),
-      }
+        match color {
+            "red" => self.red,
+            "blue" => self.blue,
+            "green" => self.green,
+            _ => panic!("Invalid property value {}", color),
+        }
     }
 
     pub fn get_power(&self) -> i32 {
-      return self.red * self.blue * self.green;
+        return self.red * self.blue * self.green;
     }
 }
 
@@ -138,40 +138,40 @@ fn set_is_valid(game_dice: Cubes) -> bool {
 }
 
 fn get_power_of_min(inp: &str) -> i32 {
-  let sets: Option<&str> = inp.split(":").last();
-  let min_cube: Cubes;
+    let sets: Option<&str> = inp.split(":").last();
+    let min_cube: Cubes;
 
-  match sets {
-    Some(d) => min_cube = find_min_dice(d.trim()),
-    None => panic!("Could not find dice for game"),
-  }
+    match sets {
+        Some(d) => min_cube = find_min_dice(d.trim()),
+        None => panic!("Could not find dice for game"),
+    }
 
-  return min_cube.get_power();
+    return min_cube.get_power();
 }
 
 fn find_min_dice(game: &str) -> Cubes {
-  let mut min_cube: Cubes = Cubes {
-    red: 0,
-    blue: 0,
-    green: 0,
-  };
+    let mut min_cube: Cubes = Cubes {
+        red: 0,
+        blue: 0,
+        green: 0,
+    };
 
-  for set in game.split(";") {
-    let set_colors: str::Split<'_, &str> = set.split(",");
+    for set in game.split(";") {
+        let set_colors: str::Split<'_, &str> = set.split(",");
 
-    for dice in set_colors {
-      let mut dice_split: str::Split<'_, &str> = dice.trim().split(" ");
-      let dice_count: i32 = dice_split.next().unwrap().parse::<i32>().unwrap();
-      let dice_color: &str = dice_split.next().unwrap();
-      let current_color = min_cube.get_color(dice_color);
+        for dice in set_colors {
+            let mut dice_split: str::Split<'_, &str> = dice.trim().split(" ");
+            let dice_count: i32 = dice_split.next().unwrap().parse::<i32>().unwrap();
+            let dice_color: &str = dice_split.next().unwrap();
+            let current_color = min_cube.get_color(dice_color);
 
-      if current_color < dice_count {
-        min_cube = min_cube.set_color(dice_count, dice_color);
-      }
+            if current_color < dice_count {
+                min_cube = min_cube.set_color(dice_count, dice_color);
+            }
+        }
     }
-  }
 
-  return min_cube;
+    return min_cube;
 }
 
 #[cfg(test)]
@@ -218,17 +218,23 @@ mod tests {
 
     #[test]
     fn find_min_dice_valid() {
-      let expected: Cubes = Cubes {
-        red: 2,
-        blue: 5,
-        green: 4
-      };
+        let expected: Cubes = Cubes {
+            red: 2,
+            blue: 5,
+            green: 4,
+        };
 
-      assert_eq!(expected, find_min_dice("3 blue, 4 green; 5 blue, 1 green, 2 red"));
+        assert_eq!(
+            expected,
+            find_min_dice("3 blue, 4 green; 5 blue, 1 green, 2 red")
+        );
     }
 
     #[test]
     fn get_power_of_min_valid() {
-      assert_eq!(120, get_power_of_min("Game 5: 6 blue, 1 green; 2 blue, 4 red, 5 green"));
+        assert_eq!(
+            120,
+            get_power_of_min("Game 5: 6 blue, 1 green; 2 blue, 4 red, 5 green")
+        );
     }
 }
