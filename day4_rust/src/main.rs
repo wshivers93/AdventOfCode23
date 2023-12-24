@@ -34,15 +34,11 @@ fn get_sum_of_scratchcard(winning_nums: &str, card_nums: &str) -> i32 {
         }
     }
 
-    if winning_count == 1 {
-        return 1;
+    if winning_count == 0 {
+      return 0;
     }
 
-    if winning_count > 1 {
-        return base.pow(winning_count - 1);
-    }
-
-    return 0;
+    return base.pow(winning_count - 1);
 }
 
 #[cfg(test)]
